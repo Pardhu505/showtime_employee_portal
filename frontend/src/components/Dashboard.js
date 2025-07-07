@@ -89,6 +89,14 @@ const Dashboard = () => {
                     <p className="text-blue-200 text-sm mt-2">
                       Access your workspace portals and stay updated with company announcements
                     </p>
+                    {birthdayAnnouncements.length > 0 && (
+                      <div className="mt-4 flex items-center space-x-2">
+                        <Gift className="h-5 w-5 text-yellow-300" />
+                        <span className="text-yellow-200 text-sm">
+                          {birthdayAnnouncements.length} birthday{birthdayAnnouncements.length > 1 ? 's' : ''} today! 🎉
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="hidden md:block">
                     <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
