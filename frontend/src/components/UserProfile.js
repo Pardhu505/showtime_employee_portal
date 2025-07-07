@@ -210,7 +210,7 @@ const UserProfile = () => {
                 </Button>
                 <Button
                   onClick={handleSave}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+                  className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   Save Changes
