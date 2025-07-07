@@ -7,7 +7,9 @@ import UserProfile from './UserProfile';
 import InternalCommunication from './InternalCommunication';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { Calendar, Users, BarChart3, Bell, MessageSquare } from 'lucide-react';
+import { Badge } from './ui/badge';
+import { Calendar, Users, BarChart3, Bell, MessageSquare, Gift } from 'lucide-react';
+import { checkBirthdays, generateBirthdayAnnouncements } from '../data/mock';
 
 const Dashboard = () => {
   const { user } = useAuth();
