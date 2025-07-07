@@ -48,6 +48,36 @@ const UserProfile = () => {
     setIsEditing(false);
   };
 
+  // Get team structure and reporting hierarchy
+  const getTeamStructure = () => {
+    if (!user?.department || !user?.subDepartment) return { teammates: [], manager: null, directReports: [] };
+    
+    const allEmployees = getAllEmployees();
+    
+    // Find teammates (same department and sub-department)
+    const teammates = allEmployees.filter(emp => 
+      emp.Department === user.department && 
+      emp.SubDepartment === user.subDepartment &&
+      emp["Email ID"] !== user.email
+    );
+    
+    // Find manager (person this user reports to)
+    const manager = allEmployees.find(emp => 
+      emp.Name === user.reviewer || 
+      user.reviewer?.includes(emp.Name)
+    );
+    
+    // Find direct reports (people who report to this user)
+    const directReports = allEmployees.filter(emp => 
+      emp.Reviewer === user.name ||
+      emp.Reviewer?.includes(user.name)
+    );
+    
+    return { teammates, manager, directReports };
+  };
+
+  const { teammates, manager, directReports } = getTeamStructure();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
