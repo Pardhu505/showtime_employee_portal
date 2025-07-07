@@ -980,6 +980,18 @@ export const checkBirthdays = () => {
   return birthdayEmployees;
 };
 
+export const generateBirthdayAnnouncements = (birthdayEmployees) => {
+  return birthdayEmployees.map(emp => ({
+    id: `birthday-${emp["Email ID"]}-${new Date().getTime()}`,
+    title: `🎉 Happy Birthday ${emp.Name}! 🎂`,
+    content: `Today we celebrate ${emp.Name} from ${emp.Department} department. Wishing you a wonderful year ahead filled with success and happiness!`,
+    date: new Date().toISOString().split('T')[0],
+    priority: "medium",
+    author: "HR Team",
+    type: "birthday"
+  }));
+};
+
 // Add sample birthdays to some employees for demonstration
 const addSampleBirthdays = () => {
   const today = new Date();
