@@ -232,8 +232,8 @@ const UserProfile = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                <Building className="h-5 w-5 text-blue-600" />
+              <div className="w-10 h-10 bg-[#225F8B]/10 rounded-full flex items-center justify-center">
+                <Building className="h-5 w-5 text-[#225F8B]" />
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-700">Department</p>
@@ -242,8 +242,8 @@ const UserProfile = () => {
             </div>
 
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                <Users className="h-5 w-5 text-purple-600" />
+              <div className="w-10 h-10 bg-[#225F8B]/10 rounded-full flex items-center justify-center">
+                <Users className="h-5 w-5 text-[#225F8B]" />
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-700">Sub-Department</p>
@@ -252,8 +252,8 @@ const UserProfile = () => {
             </div>
 
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                <User className="h-5 w-5 text-green-600" />
+              <div className="w-10 h-10 bg-[#225F8B]/10 rounded-full flex items-center justify-center">
+                <User className="h-5 w-5 text-[#225F8B]" />
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-700">Reviewer</p>
