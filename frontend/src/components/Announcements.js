@@ -10,9 +10,9 @@ import { Calendar, User, AlertCircle, Info, CheckCircle, Plus, Send } from 'luci
 import { ANNOUNCEMENTS_DATA } from '../data/mock';
 import { useToast } from '../hooks/use-toast';
 
-const Announcements = () => {
+const Announcements = ({ initialAnnouncements = [] }) => {
   const [selectedPriority, setSelectedPriority] = useState('all');
-  const [announcements, setAnnouncements] = useState(ANNOUNCEMENTS_DATA);
+  const [announcements, setAnnouncements] = useState([...initialAnnouncements, ...ANNOUNCEMENTS_DATA]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: '',
@@ -21,6 +21,16 @@ const Announcements = () => {
     author: 'Admin'
   });
   const { toast } = useToast();
+
+  // Update announcements when new birthday announcements are passed
+  useEffect(() => {
+    if (initialAnnouncements.length > 0) {
+      setAnnouncements(prev => {
+        const existing = prev.filter(ann => !ann.type || ann.type !== 'birthday');
+        return [...initialAnnouncements, ...existing];
+      });
+    }
+  }, [initialAnnouncements]);
 
   const priorityColors = {
     high: 'bg-red-100 text-red-800 border-red-200',
