@@ -265,8 +265,8 @@ const UserProfile = () => {
           <Separator />
 
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-              <Calendar className="h-5 w-5 text-orange-600" />
+            <div className="w-10 h-10 bg-[#225F8B]/10 rounded-full flex items-center justify-center">
+              <Calendar className="h-5 w-5 text-[#225F8B]" />
             </div>
             <div>
               <p className="text-sm font-medium text-gray-700">Last Login</p>
