@@ -140,23 +140,33 @@ const UserProfile = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">User Profile</h2>
-        <Button
-          variant={isEditing ? "outline" : "default"}
-          onClick={() => setIsEditing(!isEditing)}
-          className={isEditing ? "text-gray-600" : "bg-gradient-to-r from-blue-600 to-purple-600 text-white"}
-        >
-          {isEditing ? (
-            <>
-              <X className="h-4 w-4 mr-2" />
-              Cancel
-            </>
-          ) : (
-            <>
-              <Edit3 className="h-4 w-4 mr-2" />
-              Edit Profile
-            </>
-          )}
-        </Button>
+        <div className="flex space-x-2">
+          <Button
+            variant="outline"
+            onClick={() => setShowPasswordChange(!showPasswordChange)}
+            className="text-gray-600"
+          >
+            <Lock className="h-4 w-4 mr-2" />
+            Change Password
+          </Button>
+          <Button
+            variant={isEditing ? "outline" : "default"}
+            onClick={() => setIsEditing(!isEditing)}
+            className={isEditing ? "text-gray-600" : "bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"}
+          >
+            {isEditing ? (
+              <>
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </>
+            ) : (
+              <>
+                <Edit3 className="h-4 w-4 mr-2" />
+                Edit Profile
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
