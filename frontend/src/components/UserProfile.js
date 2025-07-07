@@ -15,15 +15,31 @@ const UserProfile = () => {
   const { user, updateProfile } = useAuth();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
     emergency_contact: user?.emergency_contact || ''
   });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handlePasswordChange = (field, value) => {
+    setPasswordData(prev => ({
       ...prev,
       [field]: value
     }));
@@ -36,6 +52,48 @@ const UserProfile = () => {
       title: "Profile Updated",
       description: "Your profile information has been saved successfully.",
     });
+  };
+
+  const handlePasswordSave = () => {
+    if (passwordData.currentPassword !== 'Welcome@123') {
+      toast({
+        title: "Error",
+        description: "Current password is incorrect.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast({
+        title: "Error", 
+        description: "New passwords do not match.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast({
+        title: "Error",
+        description: "New password must be at least 6 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Mock password update
+    toast({
+      title: "Password Updated",
+      description: "Your password has been changed successfully.",
+    });
+    
+    setPasswordData({
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    });
+    setShowPasswordChange(false);
   };
 
   const handleCancel = () => {
