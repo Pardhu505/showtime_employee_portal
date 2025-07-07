@@ -44,11 +44,11 @@ const InternalCommunication = () => {
     const updatedMessages = messages.filter(msg => msg.channelId !== selectedChannel.id);
     setMessages(updatedMessages);
     setShowChannelSettings(false);
-    toast({
-      title: "Messages Deleted",
-      description: `All messages in #${selectedChannel.name} have been deleted.`,
-    });
+    // Need to import useToast
+    console.log(`All messages in #${selectedChannel.name} have been deleted.`);
   };
+
+  const handleSendMessage = () => {
     if (newMessage.trim()) {
       const message = {
         id: messages.length + 1,
