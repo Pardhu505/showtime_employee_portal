@@ -859,63 +859,55 @@ export const ANNOUNCEMENTS_DATA = [
   }
 ];
 
-// Mock communication channels
-export const COMMUNICATION_CHANNELS = [
-  {
-    id: 1,
-    name: "general",
-    type: "public",
-    department: "All",
-    memberCount: 150,
-    description: "General company announcements and discussions",
-    lastActivity: "2025-01-15T10:30:00Z"
-  },
-  {
-    id: 2,
-    name: "research-team",
-    type: "department",
-    department: "Research",
-    memberCount: 4,
-    description: "Research department discussions",
-    lastActivity: "2025-01-15T09:15:00Z"
-  },
-  {
-    id: 3,
-    name: "media-team",
-    type: "department",
-    department: "Media",
-    memberCount: 7,
-    description: "Media team coordination",
-    lastActivity: "2025-01-15T11:45:00Z"
-  },
-  {
-    id: 4,
-    name: "data-team",
-    type: "department",
-    department: "Data",
-    memberCount: 6,
-    description: "Data team discussions",
-    lastActivity: "2025-01-15T08:20:00Z"
-  },
-  {
-    id: 5,
-    name: "dmc-digital-production",
-    type: "team",
-    department: "DMC",
-    memberCount: 16,
-    description: "Digital Production team",
-    lastActivity: "2025-01-15T14:10:00Z"
-  },
-  {
-    id: 6,
-    name: "dmc-digital-communication",
-    type: "team",
-    department: "DMC",
-    memberCount: 7,
-    description: "Digital Communication team",
-    lastActivity: "2025-01-15T13:25:00Z"
-  }
-];
+// Mock communication channels - Generate from departments
+export const generateChannelsFromDepartments = () => {
+  const channels = [
+    {
+      id: 1,
+      name: "general",
+      type: "public",
+      department: "All",
+      memberCount: 150,
+      description: "General company announcements and discussions",
+      lastActivity: "2025-01-15T10:30:00Z"
+    }
+  ];
+
+  let channelId = 2;
+  
+  // Add department channels
+  Object.keys(DEPARTMENT_DATA).forEach(dept => {
+    channels.push({
+      id: channelId++,
+      name: dept.toLowerCase().replace(/ /g, '-'),
+      type: "department",
+      department: dept,
+      memberCount: Object.values(DEPARTMENT_DATA[dept]).flat().length,
+      description: `${dept} department discussions`,
+      lastActivity: "2025-01-15T09:15:00Z"
+    });
+
+    // Add sub-department/team channels
+    Object.keys(DEPARTMENT_DATA[dept]).forEach(subDept => {
+      if (subDept !== dept) { // Avoid duplicate names
+        channels.push({
+          id: channelId++,
+          name: `${dept.toLowerCase()}-${subDept.toLowerCase().replace(/ /g, '-')}`,
+          type: "team",
+          department: dept,
+          subDepartment: subDept,
+          memberCount: DEPARTMENT_DATA[dept][subDept].length,
+          description: `${subDept} team channel`,
+          lastActivity: "2025-01-15T11:45:00Z"
+        });
+      }
+    });
+  });
+
+  return channels;
+};
+
+export const COMMUNICATION_CHANNELS = generateChannelsFromDepartments();
 
 // Mock messages
 export const MOCK_MESSAGES = [
