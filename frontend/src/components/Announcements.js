@@ -35,8 +35,42 @@ const Announcements = () => {
   };
 
   const filteredAnnouncements = selectedPriority === 'all' 
-    ? ANNOUNCEMENTS_DATA 
-    : ANNOUNCEMENTS_DATA.filter(ann => ann.priority === selectedPriority);
+    ? announcements 
+    : announcements.filter(ann => ann.priority === selectedPriority);
+
+  const handleCreateAnnouncement = () => {
+    if (!newAnnouncement.title.trim() || !newAnnouncement.content.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in both title and content.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const announcement = {
+      id: announcements.length + 1,
+      title: newAnnouncement.title,
+      content: newAnnouncement.content,
+      priority: newAnnouncement.priority,
+      author: newAnnouncement.author,
+      date: new Date().toISOString().split('T')[0]
+    };
+
+    setAnnouncements([announcement, ...announcements]);
+    setNewAnnouncement({
+      title: '',
+      content: '',
+      priority: 'medium',
+      author: 'Admin'
+    });
+    setShowCreateForm(false);
+    
+    toast({
+      title: "Announcement Created",
+      description: "Your announcement has been published successfully.",
+    });
+  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
