@@ -7,7 +7,7 @@ import { Label } from './ui/label';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Separator } from './ui/separator';
-import { User, Mail, Building, Users, Calendar, Edit3, Save, X, Network, ChevronRight } from 'lucide-react';
+import { User, Mail, Building, Users, Calendar, Edit3, Save, X, Network, ChevronRight, Lock, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { DEPARTMENT_DATA, getAllEmployees } from '../data/mock';
 
