@@ -2,18 +2,12 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { ExternalLink, ArrowRight, MessageSquare } from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 import { PORTAL_DATA } from '../data/mock';
 
 const PortalCards = () => {
-  const handlePortalClick = (url, isInternal = false) => {
-    if (isInternal) {
-      // Handle internal navigation for communication portal
-      const event = new CustomEvent('navigateToSection', { detail: 'communication' });
-      window.dispatchEvent(event);
-    } else {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
+  const handlePortalClick = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -30,7 +24,7 @@ const PortalCards = () => {
           <Card 
             key={portal.id} 
             className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-0 bg-white/80 backdrop-blur-sm hover:scale-105"
-            onClick={() => handlePortalClick(portal.url, portal.isInternal)}
+            onClick={() => handlePortalClick(portal.url)}
           >
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
@@ -58,15 +52,11 @@ const PortalCards = () => {
                   className="group-hover:bg-[#225F8B]/10 group-hover:border-[#225F8B]/50 group-hover:text-[#225F8B] transition-all duration-200"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handlePortalClick(portal.url, portal.isInternal);
+                    handlePortalClick(portal.url);
                   }}
                 >
-                  {portal.isInternal ? (
-                    <MessageSquare className="h-4 w-4 mr-2" />
-                  ) : (
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                  )}
-                  {portal.isInternal ? 'Open Chat' : 'Open Portal'}
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open Portal
                 </Button>
                 
                 <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-[#225F8B] group-hover:translate-x-1 transition-all duration-200" />
@@ -85,7 +75,7 @@ const PortalCards = () => {
                 Quick Access Tips
               </h3>
               <p className="text-gray-600 text-sm">
-                Click on any portal card to access different systems. External portals open in new tabs, while internal tools open within this platform.
+                Click on any portal card to open it in a new tab. All portals are accessible to all employees.
               </p>
             </div>
             <div className="hidden md:block">
