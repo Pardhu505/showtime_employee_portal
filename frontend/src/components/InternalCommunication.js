@@ -6,7 +6,6 @@ import { Input } from './ui/input';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Separator } from './ui/separator';
-import { ScrollArea } from './ui/scroll-area';
 import { 
   Hash, 
   Users, 
@@ -21,7 +20,7 @@ import {
   ChevronRight,
   Dot
 } from 'lucide-react';
-import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees, DEPARTMENT_DATA } from '../data/mock';
+import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees } from '../data/mock';
 
 const InternalCommunication = () => {
   const { user } = useAuth();
@@ -141,7 +140,7 @@ const InternalCommunication = () => {
         </div>
       </div>
 
-      <ScrollArea className="flex-1 p-4">
+      <div className="flex-1 p-4 overflow-y-auto">
         {activeTab === 'channels' && (
           <div className="space-y-2">
             <div className="flex items-center justify-between mb-3">
@@ -179,6 +178,7 @@ const InternalCommunication = () => {
             <h3 className="text-sm font-semibold text-gray-700">Team Members</h3>
             {getAllEmployees()
               .filter(emp => emp.Department === user.department)
+              .slice(0, 10)
               .map((emp, index) => (
                 <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50">
                   <Avatar className="w-8 h-8">
@@ -199,7 +199,7 @@ const InternalCommunication = () => {
         {activeTab === 'directory' && (
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-gray-700">Employee Directory</h3>
-            {Object.keys(getEmployeesByDepartment()).map((dept) => (
+            {Object.keys(getEmployeesByDepartment()).slice(0, 5).map((dept) => (
               <div key={dept} className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Building className="h-4 w-4 text-[#225F8B]" />
@@ -208,7 +208,7 @@ const InternalCommunication = () => {
                     {Object.values(getEmployeesByDepartment()[dept]).flat().length}
                   </Badge>
                 </div>
-                {Object.keys(getEmployeesByDepartment()[dept]).map((subDept) => (
+                {Object.keys(getEmployeesByDepartment()[dept]).slice(0, 2).map((subDept) => (
                   <div key={subDept} className="ml-6 space-y-1">
                     <div className="flex items-center space-x-2">
                       <ChevronRight className="h-3 w-3 text-gray-400" />
@@ -218,7 +218,7 @@ const InternalCommunication = () => {
                       </Badge>
                     </div>
                     <div className="ml-5 space-y-1">
-                      {getEmployeesByDepartment()[dept][subDept].map((emp, index) => (
+                      {getEmployeesByDepartment()[dept][subDept].slice(0, 3).map((emp, index) => (
                         <div key={index} className="text-xs text-gray-600 flex items-center space-x-2">
                           <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                           <span>{emp.Name} ({emp.Designation})</span>
@@ -231,7 +231,7 @@ const InternalCommunication = () => {
             ))}
           </div>
         )}
-      </ScrollArea>
+      </div>
     </div>
   );
 
@@ -259,7 +259,7 @@ const InternalCommunication = () => {
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4">
+      <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
           {getChannelMessages().map((message) => (
             <div key={message.id} className="flex items-start space-x-3">
@@ -282,7 +282,7 @@ const InternalCommunication = () => {
           ))}
           <div ref={messagesEndRef} />
         </div>
-      </ScrollArea>
+      </div>
 
       {/* Message Input */}
       <div className="p-4 border-t border-gray-200 bg-white/90">
