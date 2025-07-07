@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Calendar, User, AlertCircle, Info, CheckCircle } from 'lucide-react';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Textarea } from './ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Calendar, User, AlertCircle, Info, CheckCircle, Plus, Send } from 'lucide-react';
 import { ANNOUNCEMENTS_DATA } from '../data/mock';
+import { useToast } from '../hooks/use-toast';
 
 const Announcements = () => {
   const [selectedPriority, setSelectedPriority] = useState('all');
