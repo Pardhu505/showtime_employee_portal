@@ -334,9 +334,22 @@ const InternalCommunication = () => {
             <Badge variant="outline" className="text-xs">
               {selectedChannel.memberCount} members
             </Badge>
-            <Button size="sm" variant="ghost">
-              <Settings className="h-4 w-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="ghost">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem 
+                  onClick={handleDeleteMessages}
+                  className="text-red-600 hover:text-red-700 cursor-pointer"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete all messages
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
