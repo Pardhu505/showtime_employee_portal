@@ -20,7 +20,7 @@ import {
   ChevronRight,
   Dot
 } from 'lucide-react';
-import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees } from '../data/mock';
+import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees, DEPARTMENT_DATA } from '../data/mock';
 
 const InternalCommunication = () => {
   const { user } = useAuth();
