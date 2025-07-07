@@ -828,6 +828,16 @@ export const PORTAL_DATA = [
     icon: "🏢",
     gradient: "from-green-500 to-blue-600",
     category: "Management"
+  },
+  {
+    id: 3,
+    title: "Internal Communication",
+    description: "Team chat, department channels, and employee directory",
+    url: "#communication",
+    icon: "💬",
+    gradient: "from-purple-500 to-pink-600",
+    category: "Communication",
+    isInternal: true
   }
 ];
 
@@ -859,49 +869,92 @@ export const ANNOUNCEMENTS_DATA = [
   }
 ];
 
-// Mock quick links data
-export const QUICK_LINKS_DATA = [
+// Mock communication channels
+export const COMMUNICATION_CHANNELS = [
   {
     id: 1,
-    title: "Employee Handbook",
-    url: "#",
-    icon: "📖",
-    description: "Company policies and procedures"
+    name: "general",
+    type: "public",
+    department: "All",
+    memberCount: 150,
+    description: "General company announcements and discussions",
+    lastActivity: "2025-01-15T10:30:00Z"
   },
   {
     id: 2,
-    title: "IT Support",
-    url: "#",
-    icon: "🔧",
-    description: "Technical support and help desk"
+    name: "research-team",
+    type: "department",
+    department: "Research",
+    memberCount: 4,
+    description: "Research department discussions",
+    lastActivity: "2025-01-15T09:15:00Z"
   },
   {
     id: 3,
-    title: "Leave Management",
-    url: "#",
-    icon: "🏖️",
-    description: "Apply and manage leave requests"
+    name: "media-team",
+    type: "department",
+    department: "Media",
+    memberCount: 7,
+    description: "Media team coordination",
+    lastActivity: "2025-01-15T11:45:00Z"
   },
   {
     id: 4,
-    title: "Training Resources",
-    url: "#",
-    icon: "🎓",
-    description: "Learning and development materials"
+    name: "data-team",
+    type: "department",
+    department: "Data",
+    memberCount: 6,
+    description: "Data team discussions",
+    lastActivity: "2025-01-15T08:20:00Z"
   },
   {
     id: 5,
-    title: "Company Directory",
-    url: "#",
-    icon: "📞",
-    description: "Contact information and org chart"
+    name: "dmc-digital-production",
+    type: "team",
+    department: "DMC",
+    memberCount: 16,
+    description: "Digital Production team",
+    lastActivity: "2025-01-15T14:10:00Z"
   },
   {
     id: 6,
-    title: "Benefits Portal",
-    url: "#",
-    icon: "🏥",
-    description: "Employee benefits and insurance"
+    name: "dmc-digital-communication",
+    type: "team",
+    department: "DMC",
+    memberCount: 7,
+    description: "Digital Communication team",
+    lastActivity: "2025-01-15T13:25:00Z"
+  }
+];
+
+// Mock messages
+export const MOCK_MESSAGES = [
+  {
+    id: 1,
+    channelId: 1,
+    senderId: "srinath@showtimeconsulting.in",
+    senderName: "P. Srinath Rao",
+    content: "Good morning everyone! Hope you all have a productive day ahead.",
+    timestamp: "2025-01-15T09:00:00Z",
+    type: "text"
+  },
+  {
+    id: 2,
+    channelId: 1,
+    senderId: "tejaswini@showtimeconsulting.in",
+    senderName: "Tejaswini CH",
+    content: "Reminder: Please submit your monthly reports by EOD today.",
+    timestamp: "2025-01-15T10:30:00Z",
+    type: "text"
+  },
+  {
+    id: 3,
+    channelId: 2,
+    senderId: "aparnajyothi@showtimeconsulting.in",
+    senderName: "Aparna Jyothi",
+    content: "The research project documentation is ready for review. Please check the shared folder.",
+    timestamp: "2025-01-15T09:15:00Z",
+    type: "text"
   }
 ];
 

@@ -33,10 +33,19 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#225F8B]/5 via-[#225F8B]/5 to-[#225F8B]/10"></div>
       
-      <Card className="w-full max-w-md relative backdrop-blur-sm bg-white/80 shadow-2xl border-0">
+      {/* Background Shape */}
+      <div className="absolute inset-0 opacity-20">
+        <img 
+          src="https://showtimeconsulting.in/web/images/thm-shape1.png" 
+          alt="Background Shape" 
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+      
+      <Card className="w-full max-w-md relative backdrop-blur-sm bg-white/90 shadow-2xl border-0 z-10">
         <CardHeader className="text-center pb-8">
           <div className="flex justify-center mb-6">
             <div className="relative">
