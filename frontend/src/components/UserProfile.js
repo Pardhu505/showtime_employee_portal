@@ -277,6 +277,126 @@ const UserProfile = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Team Structure and Organizational Hierarchy */}
+      <Card className="bg-white/80 backdrop-blur-sm border-0">
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Network className="h-5 w-5 mr-2" />
+            Team Structure & Organizational Hierarchy
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Reporting Manager */}
+          {manager && (
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                <User className="h-4 w-4 mr-2" />
+                Reports To
+              </h4>
+              <Card className="bg-gradient-to-r from-[#225F8B]/5 to-[#225F8B]/10 border-[#225F8B]/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <Avatar className="w-10 h-10">
+                      <AvatarFallback className="bg-[#225F8B] text-white text-sm">
+                        {manager.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium text-gray-900">{manager.Name}</p>
+                      <p className="text-sm text-gray-600">{manager.Designation}</p>
+                      <p className="text-xs text-gray-500">{manager["Email ID"]}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Direct Reports */}
+          {directReports.length > 0 && (
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                <Users className="h-4 w-4 mr-2" />
+                Direct Reports ({directReports.length})
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {directReports.map((report, index) => (
+                  <Card key={index} className="bg-gray-50 border-gray-200">
+                    <CardContent className="p-3">
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="w-8 h-8">
+                          <AvatarFallback className="bg-gray-600 text-white text-xs">
+                            {report.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{report.Name}</p>
+                          <p className="text-xs text-gray-600">{report.Designation}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Team Members */}
+          {teammates.length > 0 && (
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                <Building className="h-4 w-4 mr-2" />
+                Team Members ({teammates.length})
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {teammates.map((teammate, index) => (
+                  <Card key={index} className="bg-blue-50 border-blue-200">
+                    <CardContent className="p-3">
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="w-8 h-8">
+                          <AvatarFallback className="bg-blue-600 text-white text-xs">
+                            {teammate.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{teammate.Name}</p>
+                          <p className="text-xs text-gray-600">{teammate.Designation}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Department Hierarchy */}
+          <div>
+            <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+              <ChevronRight className="h-4 w-4 mr-2" />
+              Department Hierarchy
+            </h4>
+            <Card className="bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-2 text-sm">
+                  <span className="text-gray-600">Organization</span>
+                  <ChevronRight className="h-3 w-3 text-gray-400" />
+                  <span className="font-medium text-[#225F8B]">{user?.department}</span>
+                  {user?.subDepartment && (
+                    <>
+                      <ChevronRight className="h-3 w-3 text-gray-400" />
+                      <span className="font-medium text-gray-700">{user?.subDepartment}</span>
+                    </>
+                  )}
+                  <ChevronRight className="h-3 w-3 text-gray-400" />
+                  <span className="text-gray-900 font-semibold">{user?.name}</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
