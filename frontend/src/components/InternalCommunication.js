@@ -40,7 +40,15 @@ const InternalCommunication = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = () => {
+  const handleDeleteMessages = () => {
+    const updatedMessages = messages.filter(msg => msg.channelId !== selectedChannel.id);
+    setMessages(updatedMessages);
+    setShowChannelSettings(false);
+    toast({
+      title: "Messages Deleted",
+      description: `All messages in #${selectedChannel.name} have been deleted.`,
+    });
+  };
     if (newMessage.trim()) {
       const message = {
         id: messages.length + 1,
