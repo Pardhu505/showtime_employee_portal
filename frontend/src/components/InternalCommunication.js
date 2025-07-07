@@ -18,7 +18,9 @@ import {
   UserPlus,
   Building,
   ChevronRight,
-  Dot
+  Dot,
+  Trash2,
+  MoreVertical
 } from 'lucide-react';
 import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees, DEPARTMENT_DATA } from '../data/mock';
 
