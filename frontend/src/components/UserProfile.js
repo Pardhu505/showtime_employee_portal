@@ -268,6 +268,25 @@ const UserProfile = () => {
                   <p className="mt-1 text-sm text-gray-900">{user?.emergency_contact || 'Not provided'}</p>
                 )}
               </div>
+
+              <div>
+                <Label htmlFor="date_of_birth" className="text-sm font-medium text-gray-700">
+                  Date of Birth
+                </Label>
+                {isEditing ? (
+                  <Input
+                    id="date_of_birth"
+                    type="date"
+                    value={formData.date_of_birth}
+                    onChange={(e) => handleInputChange('date_of_birth', e.target.value)}
+                    className="mt-1"
+                  />
+                ) : (
+                  <p className="mt-1 text-sm text-gray-900">
+                    {user?.date_of_birth ? new Date(user.date_of_birth).toLocaleDateString() : 'Not provided'}
+                  </p>
+                )}
+              </div>
             </div>
 
             {isEditing && (
