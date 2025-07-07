@@ -98,6 +98,87 @@ const Announcements = () => {
         </div>
       </div>
 
+      {/* Create Announcement Form */}
+      {showCreateForm && (
+        <Card className="bg-gradient-to-r from-[#225F8B]/5 to-[#225F8B]/10 border-[#225F8B]/20">
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-gray-900">
+              Create New Announcement
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="title" className="text-sm font-medium text-gray-700">
+                  Title
+                </Label>
+                <Input
+                  id="title"
+                  value={newAnnouncement.title}
+                  onChange={(e) => setNewAnnouncement({...newAnnouncement, title: e.target.value})}
+                  placeholder="Enter announcement title"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="priority" className="text-sm font-medium text-gray-700">
+                  Priority
+                </Label>
+                <Select 
+                  value={newAnnouncement.priority} 
+                  onValueChange={(value) => setNewAnnouncement({...newAnnouncement, priority: value})}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="high">High Priority</SelectItem>
+                    <SelectItem value="medium">Medium Priority</SelectItem>
+                    <SelectItem value="low">Low Priority</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="content" className="text-sm font-medium text-gray-700">
+                Content
+              </Label>
+              <Textarea
+                id="content"
+                value={newAnnouncement.content}
+                onChange={(e) => setNewAnnouncement({...newAnnouncement, content: e.target.value})}
+                placeholder="Enter announcement content"
+                rows={4}
+                className="mt-1"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowCreateForm(false);
+                  setNewAnnouncement({
+                    title: '',
+                    content: '',
+                    priority: 'medium',
+                    author: 'Admin'
+                  });
+                }}
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleCreateAnnouncement}
+                className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Publish Announcement
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Priority Filter */}
       <div className="flex flex-wrap gap-2">
         {['all', 'high', 'medium', 'low'].map((priority) => (
