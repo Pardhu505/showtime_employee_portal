@@ -14,6 +14,7 @@ import { checkBirthdays, generateBirthdayAnnouncements } from '../data/mock';
 const Dashboard = () => {
   const { user } = useAuth();
   const [activeSection, setActiveSection] = useState('portals');
+  const [birthdayAnnouncements, setBirthdayAnnouncements] = useState([]);
 
   // Listen for internal navigation events
   useEffect(() => {
@@ -25,6 +26,15 @@ const Dashboard = () => {
 
     window.addEventListener('navigateToSection', handleNavigation);
     return () => window.removeEventListener('navigateToSection', handleNavigation);
+  }, []);
+
+  // Check for birthdays on component mount
+  useEffect(() => {
+    const birthdayEmployees = checkBirthdays();
+    if (birthdayEmployees.length > 0) {
+      const announcements = generateBirthdayAnnouncements(birthdayEmployees);
+      setBirthdayAnnouncements(announcements);
+    }
   }, []);
 
   const renderContent = () => {
