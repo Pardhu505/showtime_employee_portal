@@ -84,9 +84,18 @@ const Announcements = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Announcements</h2>
-        <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
-          {filteredAnnouncements.length} {selectedPriority === 'all' ? 'Total' : selectedPriority}
-        </Badge>
+        <div className="flex items-center space-x-2">
+          <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
+            {filteredAnnouncements.length} {selectedPriority === 'all' ? 'Total' : selectedPriority}
+          </Badge>
+          <Button 
+            onClick={() => setShowCreateForm(!showCreateForm)}
+            className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Announcement
+          </Button>
+        </div>
       </div>
 
       {/* Priority Filter */}
