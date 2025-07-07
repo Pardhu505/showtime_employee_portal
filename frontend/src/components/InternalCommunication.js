@@ -142,93 +142,159 @@ const InternalCommunication = () => {
 
       <div className="flex-1 p-4 overflow-y-auto">
         {activeTab === 'channels' && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-gray-700">Channels</h3>
-              <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            {getFilteredChannels().map((channel) => (
-              <Button
-                key={channel.id}
-                variant={selectedChannel.id === channel.id ? "secondary" : "ghost"}
-                className={`w-full justify-start px-3 py-2 h-auto ${
-                  selectedChannel.id === channel.id 
-                    ? 'bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20' 
-                    : 'text-gray-700 hover:bg-gray-100'
-                }`}
-                onClick={() => setSelectedChannel(channel)}
-              >
-                <div className="flex items-center space-x-2 w-full">
-                  {getChannelIcon(channel)}
-                  <div className="flex-1 text-left">
-                    <div className="font-medium">{channel.name}</div>
-                    <div className="text-xs text-gray-500">{channel.memberCount} members</div>
+          <div className="space-y-4">
+            {/* Public Channels */}
+            <div>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center">
+                <Hash className="h-3 w-3 mr-1" />
+                Public Channels
+              </h3>
+              {getFilteredChannels().filter(ch => ch.type === 'public').map((channel) => (
+                <Button
+                  key={channel.id}
+                  variant="ghost"
+                  className={`w-full justify-start px-2 py-1 h-auto mb-1 ${
+                    selectedChannel.id === channel.id 
+                      ? 'bg-[#225F8B]/10 text-[#225F8B]' 
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                  onClick={() => setSelectedChannel(channel)}
+                >
+                  <div className="flex items-center space-x-2 w-full">
+                    <Hash className="h-4 w-4" />
+                    <span className="font-medium">{channel.name}</span>
+                    <span className="text-xs text-gray-500 ml-auto">{channel.memberCount}</span>
                   </div>
-                  <Dot className="h-3 w-3 text-green-500" />
-                </div>
-              </Button>
-            ))}
+                </Button>
+              ))}
+            </div>
+
+            {/* Department Channels */}
+            <div>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center">
+                <Building className="h-3 w-3 mr-1" />
+                Department Channels
+              </h3>
+              {getFilteredChannels().filter(ch => ch.type === 'department').map((channel) => (
+                <Button
+                  key={channel.id}
+                  variant="ghost"
+                  className={`w-full justify-start px-2 py-1 h-auto mb-1 ${
+                    selectedChannel.id === channel.id 
+                      ? 'bg-[#225F8B]/10 text-[#225F8B]' 
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                  onClick={() => setSelectedChannel(channel)}
+                >
+                  <div className="flex items-center space-x-2 w-full">
+                    <Hash className="h-4 w-4" />
+                    <span className="font-medium">{channel.name}</span>
+                    <span className="text-xs text-gray-500 ml-auto">{channel.memberCount}</span>
+                  </div>
+                </Button>
+              ))}
+            </div>
+
+            {/* Team Channels */}
+            <div>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center">
+                <Users className="h-3 w-3 mr-1" />
+                Team Channels
+              </h3>
+              {getFilteredChannels().filter(ch => ch.type === 'team').map((channel) => (
+                <Button
+                  key={channel.id}
+                  variant="ghost"
+                  className={`w-full justify-start px-2 py-1 h-auto mb-1 ${
+                    selectedChannel.id === channel.id 
+                      ? 'bg-[#225F8B]/10 text-[#225F8B]' 
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                  onClick={() => setSelectedChannel(channel)}
+                >
+                  <div className="flex items-center space-x-2 w-full">
+                    <Hash className="h-4 w-4" />
+                    <span className="font-medium text-sm">{channel.name}</span>
+                    <span className="text-xs text-gray-500 ml-auto">{channel.memberCount}</span>
+                  </div>
+                </Button>
+              ))}
+            </div>
           </div>
         )}
 
         {activeTab === 'people' && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">Team Members</h3>
-            {getAllEmployees()
-              .filter(emp => emp.Department === user.department)
-              .slice(0, 10)
-              .map((emp, index) => (
-                <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Online</h3>
+              <span className="text-xs text-gray-500">{getAllEmployees().length} members</span>
+            </div>
+            {getAllEmployees().slice(0, 20).map((emp, index) => (
+              <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div className="relative">
                   <Avatar className="w-8 h-8">
                     <AvatarFallback className="bg-[#225F8B] text-white text-xs">
                       {emp.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium">{emp.Name}</div>
-                    <div className="text-xs text-gray-500">{emp.Designation}</div>
-                  </div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div className="absolute -bottom-0 -right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                 </div>
-              ))}
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">{emp.Name}</div>
+                  <div className="text-xs text-gray-500 truncate">{emp.Designation} • {emp.Department}</div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
         {activeTab === 'directory' && (
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-700">Employee Directory</h3>
-            {Object.keys(getEmployeesByDepartment()).slice(0, 5).map((dept) => (
-              <div key={dept} className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Building className="h-4 w-4 text-[#225F8B]" />
-                  <span className="font-medium text-[#225F8B]">{dept}</span>
-                  <Badge variant="outline" className="text-xs">
-                    {Object.values(getEmployeesByDepartment()[dept]).flat().length}
-                  </Badge>
-                </div>
-                {Object.keys(getEmployeesByDepartment()[dept]).slice(0, 2).map((subDept) => (
-                  <div key={subDept} className="ml-6 space-y-1">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Company Directory</h3>
+            {Object.keys(DEPARTMENT_DATA).map((dept) => {
+              const deptEmployees = Object.values(DEPARTMENT_DATA[dept]).flat();
+              return (
+                <div key={dept} className="space-y-2">
+                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                     <div className="flex items-center space-x-2">
-                      <ChevronRight className="h-3 w-3 text-gray-400" />
-                      <span className="text-sm font-medium text-gray-700">{subDept}</span>
-                      <Badge variant="secondary" className="text-xs">
-                        {getEmployeesByDepartment()[dept][subDept].length}
-                      </Badge>
+                      <Building className="h-4 w-4 text-[#225F8B]" />
+                      <span className="font-semibold text-[#225F8B] text-sm">{dept}</span>
                     </div>
-                    <div className="ml-5 space-y-1">
-                      {getEmployeesByDepartment()[dept][subDept].slice(0, 3).map((emp, index) => (
-                        <div key={index} className="text-xs text-gray-600 flex items-center space-x-2">
-                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                          <span>{emp.Name} ({emp.Designation})</span>
-                        </div>
-                      ))}
-                    </div>
+                    <Badge variant="outline" className="text-xs bg-white">
+                      {deptEmployees.length} members
+                    </Badge>
                   </div>
-                ))}
-              </div>
-            ))}
+                  
+                  {Object.keys(DEPARTMENT_DATA[dept]).map((subDept) => (
+                    <div key={subDept} className="ml-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <ChevronRight className="h-3 w-3 text-gray-400" />
+                        <span className="text-sm font-medium text-gray-700">{subDept}</span>
+                        <Badge variant="secondary" className="text-xs">
+                          {DEPARTMENT_DATA[dept][subDept].length}
+                        </Badge>
+                      </div>
+                      <div className="ml-6 space-y-1">
+                        {DEPARTMENT_DATA[dept][subDept].map((emp, index) => (
+                          <div key={index} className="flex items-center space-x-2 py-1 hover:bg-gray-50 rounded px-2 cursor-pointer">
+                            <Avatar className="w-6 h-6">
+                              <AvatarFallback className="bg-gray-600 text-white text-xs">
+                                {emp.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-xs font-medium text-gray-900 truncate">{emp.Name}</div>
+                              <div className="text-xs text-gray-500 truncate">{emp.Designation}</div>
+                            </div>
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
