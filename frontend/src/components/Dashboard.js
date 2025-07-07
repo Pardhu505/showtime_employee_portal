@@ -42,7 +42,7 @@ const Dashboard = () => {
       case 'portals':
         return <PortalCards />;
       case 'announcements':
-        return <Announcements />;
+        return <Announcements initialAnnouncements={birthdayAnnouncements} />;
       case 'profile':
         return <UserProfile />;
       case 'communication':
