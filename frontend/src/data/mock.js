@@ -828,16 +828,6 @@ export const PORTAL_DATA = [
     icon: "🏢",
     gradient: "from-green-500 to-blue-600",
     category: "Management"
-  },
-  {
-    id: 3,
-    title: "Internal Communication",
-    description: "Team chat, department channels, and employee directory",
-    url: "#communication",
-    icon: "💬",
-    gradient: "from-purple-500 to-pink-600",
-    category: "Communication",
-    isInternal: true
   }
 ];
 
