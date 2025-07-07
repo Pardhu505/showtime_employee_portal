@@ -102,7 +102,8 @@ const UserProfile = () => {
       name: user?.name || '',
       email: user?.email || '',
       phone: user?.phone || '',
-      emergency_contact: user?.emergency_contact || ''
+      emergency_contact: user?.emergency_contact || '',
+      date_of_birth: user?.date_of_birth || ''
     });
     setIsEditing(false);
   };
