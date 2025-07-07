@@ -32,3 +32,8 @@
         transform: rotate(360deg);
     }
 }
+
+/* Hide Emergent badge if present */
+#emergent-badge {
+    display: none !important;
+}
