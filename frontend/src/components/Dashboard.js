@@ -13,6 +13,18 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [activeSection, setActiveSection] = useState('portals');
 
+  // Listen for internal navigation events
+  useEffect(() => {
+    const handleNavigation = (event) => {
+      if (event.detail === 'communication') {
+        setActiveSection('communication');
+      }
+    };
+
+    window.addEventListener('navigateToSection', handleNavigation);
+    return () => window.removeEventListener('navigateToSection', handleNavigation);
+  }, []);
+
   const renderContent = () => {
     switch (activeSection) {
       case 'portals':
