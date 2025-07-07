@@ -36,7 +36,7 @@ const Announcements = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Announcements</h2>
-        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+        <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
           {filteredAnnouncements.length} {selectedPriority === 'all' ? 'Total' : selectedPriority}
         </Badge>
       </div>
@@ -51,8 +51,8 @@ const Announcements = () => {
             onClick={() => setSelectedPriority(priority)}
             className={`transition-all duration-200 ${
               selectedPriority === priority
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                : 'hover:bg-blue-50 hover:border-blue-300'
+                ? 'bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white'
+                : 'hover:bg-[#225F8B]/10 hover:border-[#225F8B]/50'
             }`}
           >
             {priority.charAt(0).toUpperCase() + priority.slice(1)}
@@ -124,7 +124,7 @@ const Announcements = () => {
       </div>
 
       {/* Quick Stats */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+      <Card className="bg-gradient-to-r from-[#225F8B]/5 to-[#225F8B]/10 border-[#225F8B]/20">
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">

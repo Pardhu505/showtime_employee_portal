@@ -14,7 +14,7 @@ const PortalCards = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Portal Access</h2>
-        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+        <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
           {PORTAL_DATA.length} Available
         </Badge>
       </div>
@@ -35,7 +35,7 @@ const PortalCards = () => {
                   {portal.category}
                 </Badge>
               </div>
-              <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+              <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-[#225F8B] transition-colors">
                 {portal.title}
               </CardTitle>
             </CardHeader>
@@ -49,7 +49,7 @@ const PortalCards = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="group-hover:bg-blue-50 group-hover:border-blue-300 group-hover:text-blue-700 transition-all duration-200"
+                  className="group-hover:bg-[#225F8B]/10 group-hover:border-[#225F8B]/50 group-hover:text-[#225F8B] transition-all duration-200"
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePortalClick(portal.url);
@@ -59,7 +59,7 @@ const PortalCards = () => {
                   Open Portal
                 </Button>
                 
-                <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200" />
+                <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-[#225F8B] group-hover:translate-x-1 transition-all duration-200" />
               </div>
             </CardContent>
           </Card>
@@ -67,7 +67,7 @@ const PortalCards = () => {
       </div>
 
       {/* Quick Access Info */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+      <Card className="bg-gradient-to-r from-[#225F8B]/5 to-[#225F8B]/10 border-[#225F8B]/20">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -80,7 +80,7 @@ const PortalCards = () => {
             </div>
             <div className="hidden md:block">
               <div className="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center">
-                <ExternalLink className="h-8 w-8 text-blue-600" />
+                <ExternalLink className="h-8 w-8 text-[#225F8B]" />
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ const Header = () => {
               className="h-10 w-auto object-contain"
             />
             <div className="hidden md:block">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 bg-clip-text text-transparent">
                 Showtime Consulting
               </h1>
               <p className="text-xs text-gray-500">Employee Portal</p>
@@ -46,7 +46,7 @@ const Header = () => {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                 <Avatar>
-                  <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                  <AvatarFallback className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white">
                     {user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
                   </AvatarFallback>
                 </Avatar>

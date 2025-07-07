@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-indigo-600/5 to-purple-600/5"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#225F8B]/5 via-[#225F8B]/5 to-[#225F8B]/10"></div>
       
       <Card className="w-full max-w-md relative backdrop-blur-sm bg-white/80 shadow-2xl border-0">
         <CardHeader className="text-center pb-8">
@@ -45,16 +45,16 @@ const Login = () => {
                 alt="Showtime Consulting" 
                 className="h-20 w-auto object-contain"
               />
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 rounded-full blur opacity-20"></div>
             </div>
           </div>
           
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Welcome Back
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 bg-clip-text text-transparent">
+            ShowTime Consulting
           </CardTitle>
           
           <p className="text-gray-600 text-sm mt-2">
-            Access your workspace portals
+            Employee Portal
           </p>
         </CardHeader>
 
@@ -72,7 +72,7 @@ const Login = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                  className="pl-10 h-12 border-gray-200 focus:border-[#225F8B] focus:ring-[#225F8B]"
                   required
                 />
               </div>
@@ -90,7 +90,7 @@ const Login = () => {
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10 h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                  className="pl-10 pr-10 h-12 border-gray-200 focus:border-[#225F8B] focus:ring-[#225F8B]"
                   required
                 />
                 <button
@@ -113,7 +113,7 @@ const Login = () => {
 
             <Button
               type="submit"
-              className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+              className="w-full h-12 bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 hover:from-[#225F8B]/90 hover:to-[#225F8B]/70 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
               disabled={loading}
             >
               {loading ? (
@@ -129,12 +129,6 @@ const Login = () => {
               )}
             </Button>
           </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-xs text-gray-500">
-              Default password: <span className="font-mono bg-gray-100 px-2 py-1 rounded">Welcome@123</span>
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
