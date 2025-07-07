@@ -103,17 +103,17 @@ const UserProfile = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Profile Summary */}
-        <Card className="lg:col-span-1 bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200">
+        <Card className="lg:col-span-1 bg-gradient-to-br from-[#225F8B]/10 to-[#225F8B]/20 border-[#225F8B]/20">
           <CardContent className="p-6">
             <div className="text-center">
               <Avatar className="w-24 h-24 mx-auto mb-4">
-                <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-2xl">
+                <AvatarFallback className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white text-2xl">
                   {user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <h3 className="text-xl font-bold text-gray-900 mb-2">{user?.name}</h3>
               <p className="text-gray-600 mb-4">{user?.designation}</p>
-              <Badge variant="outline" className="bg-white/50 text-blue-700 border-blue-200">
+              <Badge variant="outline" className="bg-white/50 text-[#225F8B] border-[#225F8B]/20">
                 {user?.department}
               </Badge>
             </div>
