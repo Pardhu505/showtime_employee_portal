@@ -29,6 +29,7 @@ const InternalCommunication = () => {
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('channels'); // channels, people, directory
+  const [showChannelSettings, setShowChannelSettings] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
