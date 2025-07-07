@@ -12,6 +12,15 @@ import { useToast } from '../hooks/use-toast';
 
 const Announcements = () => {
   const [selectedPriority, setSelectedPriority] = useState('all');
+  const [announcements, setAnnouncements] = useState(ANNOUNCEMENTS_DATA);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newAnnouncement, setNewAnnouncement] = useState({
+    title: '',
+    content: '',
+    priority: 'medium',
+    author: 'Admin'
+  });
+  const { toast } = useToast();
 
   const priorityColors = {
     high: 'bg-red-100 text-red-800 border-red-200',
