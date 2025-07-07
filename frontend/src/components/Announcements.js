@@ -267,19 +267,19 @@ const Announcements = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-red-600">
-                {ANNOUNCEMENTS_DATA.filter(a => a.priority === 'high').length}
+                {announcements.filter(a => a.priority === 'high').length}
               </div>
               <div className="text-sm text-gray-600">High Priority</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-yellow-600">
-                {ANNOUNCEMENTS_DATA.filter(a => a.priority === 'medium').length}
+                {announcements.filter(a => a.priority === 'medium').length}
               </div>
               <div className="text-sm text-gray-600">Medium Priority</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">
-                {ANNOUNCEMENTS_DATA.filter(a => a.priority === 'low').length}
+                {announcements.filter(a => a.priority === 'low').length}
               </div>
               <div className="text-sm text-gray-600">Low Priority</div>
             </div>
