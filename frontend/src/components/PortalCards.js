@@ -16,22 +16,6 @@ const PortalCards = () => {
     }
   };
 
-  // Listen for navigation events
-  React.useEffect(() => {
-    const handleNavigation = (event) => {
-      if (event.detail === 'communication') {
-        // This will be handled by the Dashboard component
-        const commButton = document.querySelector('button:has-text("Communication")');
-        if (commButton) {
-          commButton.click();
-        }
-      }
-    };
-
-    window.addEventListener('navigateToSection', handleNavigation);
-    return () => window.removeEventListener('navigateToSection', handleNavigation);
-  }, []);
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
