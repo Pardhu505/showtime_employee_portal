@@ -980,14 +980,27 @@ export const checkBirthdays = () => {
   return birthdayEmployees;
 };
 
-export const generateBirthdayAnnouncements = (birthdayEmployees) => {
-  return birthdayEmployees.map(emp => ({
-    id: `birthday-${emp["Email ID"]}-${new Date().getTime()}`,
-    title: `🎉 Happy Birthday ${emp.Name}! 🎂`,
-    content: `Today we celebrate ${emp.Name} from ${emp.Department} department. Wishing you a wonderful year ahead filled with success and happiness!`,
-    date: new Date().toISOString().split('T')[0],
-    priority: "medium",
-    author: "HR Team",
-    type: "birthday"
-  }));
+// Add sample birthdays to some employees for demonstration
+const addSampleBirthdays = () => {
+  const today = new Date();
+  const employees = getAllEmployees();
+  
+  // Add today's birthday for demonstration
+  if (employees.length > 0) {
+    employees[0].date_of_birth = today.toISOString().split('T')[0];
+  }
+  
+  // Add some random birthdays for other employees
+  if (employees.length > 1) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    employees[1].date_of_birth = tomorrow.toISOString().split('T')[0];
+  }
+  
+  if (employees.length > 2) {
+    employees[2].date_of_birth = '1990-06-15';
+  }
 };
+
+// Initialize sample birthdays
+addSampleBirthdays();
