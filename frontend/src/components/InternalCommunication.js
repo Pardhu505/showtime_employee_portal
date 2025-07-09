@@ -72,9 +72,37 @@ const InternalCommunication = () => {
   const handleDeleteMessages = () => {
     const updatedMessages = messages.filter(msg => msg.channelId !== selectedChannel.id);
     setMessages(updatedMessages);
-    setShowChannelSettings(false);
-    // Need to import useToast
     console.log(`All messages in #${selectedChannel.name} have been deleted.`);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setUserStatusState(newStatus);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case USER_STATUS.ONLINE:
+        return 'text-green-500';
+      case USER_STATUS.BUSY:
+        return 'text-red-500';
+      case USER_STATUS.OFFLINE:
+        return 'text-gray-400';
+      default:
+        return 'text-gray-400';
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case USER_STATUS.ONLINE:
+        return 'Online';
+      case USER_STATUS.BUSY:
+        return 'Busy';
+      case USER_STATUS.OFFLINE:
+        return 'Offline';
+      default:
+        return 'Unknown';
+    }
   };
 
   const handleSendMessage = () => {
