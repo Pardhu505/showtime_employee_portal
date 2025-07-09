@@ -6,16 +6,20 @@ import Announcements from './Announcements';
 import UserProfile from './UserProfile';
 import InternalCommunication from './InternalCommunication';
 import AdminPanel from './AdminPanel';
+import PayslipManagement from './PayslipManagement';
+import NotificationSystem from './NotificationSystem';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Calendar, Users, BarChart3, Bell, MessageSquare, Gift, Shield } from 'lucide-react';
+import { Calendar, Users, BarChart3, Bell, MessageSquare, Gift, Shield, FileText } from 'lucide-react';
 import { checkBirthdays, generateBirthdayAnnouncements } from '../data/mock';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [activeSection, setActiveSection] = useState('portals');
   const [birthdayAnnouncements, setBirthdayAnnouncements] = useState([]);
+  const [newMessages, setNewMessages] = useState([]);
+  const [newAnnouncements, setNewAnnouncements] = useState([]);
 
   // Listen for internal navigation events
   useEffect(() => {
