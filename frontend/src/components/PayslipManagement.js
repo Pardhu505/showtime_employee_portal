@@ -223,13 +223,13 @@ const PayslipManagement = () => {
               
               <div>
                 <Label htmlFor="month">Month</Label>
-                <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                <Select value={selectedMonth || ''} onValueChange={setSelectedMonth}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Month" />
                   </SelectTrigger>
                   <SelectContent>
                     {months.map((month) => (
-                      <SelectItem key={month.value} value={month.value}>
+                      <SelectItem key={month.value} value={month.value || ''}>
                         {month.label}
                       </SelectItem>
                     ))}
