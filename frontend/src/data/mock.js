@@ -1026,6 +1026,19 @@ export const setUserStatus = (email, status) => {
   localStorage.setItem(`userStatus_${email}`, status);
 };
 
+export const getStatusText = (status) => {
+  switch (status) {
+    case USER_STATUS.ONLINE:
+      return 'Online';
+    case USER_STATUS.BUSY:
+      return 'Busy';
+    case USER_STATUS.OFFLINE:
+      return 'Offline';
+    default:
+      return 'Unknown';
+  }
+};
+
 export const getAllUserStatuses = () => {
   const employees = getAllEmployees();
   return employees.map(emp => ({
