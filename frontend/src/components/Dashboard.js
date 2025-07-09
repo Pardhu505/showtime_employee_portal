@@ -69,6 +69,15 @@ const Dashboard = () => {
           className="w-full h-full object-cover object-center"
         />
       </div>
+
+      {/* Animated Shape */}
+      <div className="shape2 rotate-me">
+        <img 
+          src="https://showtimeconsulting.in/web/images/thm-shape1.png" 
+          alt="About us" 
+          className="w-20 h-20 opacity-20"
+        />
+      </div>
       
       <div className="relative z-10">
         <Header />
