@@ -72,10 +72,22 @@ const InternalCommunication = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleDeleteMessages = () => {
-    const updatedMessages = messages.filter(msg => msg.channelId !== selectedChannel.id);
-    setMessages(updatedMessages);
-    console.log(`All messages in #${selectedChannel.name} have been deleted.`);
+  const handleDeleteMessage = (messageId) => {
+    setMessages(messages.map(msg => 
+      msg.id === messageId 
+        ? { ...msg, deleted: true, content: 'This message was deleted' }
+        : msg
+    ));
+  };
+
+  const handleEmployeeClick = (employee) => {
+    setSelectedEmployee(employee);
+    setViewMode('directChat');
+  };
+
+  const handleBackToChannels = () => {
+    setViewMode('channels');
+    setSelectedEmployee(null);
   };
 
   const handleStatusChange = (newStatus) => {
