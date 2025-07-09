@@ -1009,7 +1009,30 @@ export const generateBirthdayAnnouncements = (birthdayEmployees) => {
   }));
 };
 
-// Add sample birthdays to some employees for demonstration
+// User status management
+export const USER_STATUS = {
+  ONLINE: 'online',
+  OFFLINE: 'offline',
+  BUSY: 'busy'
+};
+
+// Mock user status data
+export const getUserStatus = (email) => {
+  const savedStatus = localStorage.getItem(`userStatus_${email}`);
+  return savedStatus || USER_STATUS.ONLINE;
+};
+
+export const setUserStatus = (email, status) => {
+  localStorage.setItem(`userStatus_${email}`, status);
+};
+
+export const getAllUserStatuses = () => {
+  const employees = getAllEmployees();
+  return employees.map(emp => ({
+    ...emp,
+    status: getUserStatus(emp["Email ID"])
+  }));
+};
 const addSampleBirthdays = () => {
   const today = new Date();
   const employees = getAllEmployees();
