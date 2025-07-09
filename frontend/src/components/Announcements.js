@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -6,11 +7,12 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Calendar, User, AlertCircle, Info, CheckCircle, Plus, Send } from 'lucide-react';
+import { Calendar, User, AlertCircle, Info, CheckCircle, Plus, Send, Shield } from 'lucide-react';
 import { ANNOUNCEMENTS_DATA } from '../data/mock';
 import { useToast } from '../hooks/use-toast';
 
 const Announcements = ({ initialAnnouncements = [] }) => {
+  const { user } = useAuth();
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [announcements, setAnnouncements] = useState([...initialAnnouncements, ...ANNOUNCEMENTS_DATA]);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -18,9 +20,12 @@ const Announcements = ({ initialAnnouncements = [] }) => {
     title: '',
     content: '',
     priority: 'medium',
-    author: 'Admin'
+    author: user?.name || 'Admin'
   });
   const { toast } = useToast();
+
+  // Check if user is admin
+  const isAdmin = user?.isAdmin || user?.email === 'admin@showtimeconsulting.in';
 
   // Update announcements when new birthday announcements are passed
   useEffect(() => {
