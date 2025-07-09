@@ -345,7 +345,11 @@ const InternalCommunication = () => {
             {allUserStatuses
               .filter(emp => emp.Name.toLowerCase().includes(searchTerm.toLowerCase()))
               .map((emp, index) => (
-                <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div 
+                  key={index} 
+                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer"
+                  onClick={() => handleEmployeeClick(emp)}
+                >
                   <div className="relative">
                     <Avatar className="w-8 h-8">
                       <AvatarFallback className="bg-[#225F8B] text-white text-xs">
