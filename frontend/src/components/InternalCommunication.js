@@ -165,7 +165,33 @@ const InternalCommunication = () => {
   const renderSidebar = () => (
     <div className="w-80 bg-white/90 backdrop-blur-sm border-r border-gray-200 flex flex-col">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">ShowTime Chat</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-gray-900">ShowTime Chat</h2>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+                <Circle className={`h-3 w-3 fill-current ${getStatusColor(userStatus)}`} />
+                <span className="text-sm">{getStatusText(userStatus)}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Set Status</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleStatusChange(USER_STATUS.ONLINE)}>
+                <Circle className="h-3 w-3 fill-current text-green-500 mr-2" />
+                Online
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleStatusChange(USER_STATUS.BUSY)}>
+                <Circle className="h-3 w-3 fill-current text-red-500 mr-2" />
+                Busy
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleStatusChange(USER_STATUS.OFFLINE)}>
+                <Circle className="h-3 w-3 fill-current text-gray-400 mr-2" />
+                Offline
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         
         {/* Search */}
         <div className="relative mb-4">
