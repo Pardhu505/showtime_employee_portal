@@ -207,13 +207,13 @@ const PayslipManagement = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="employee">Employee</Label>
-                <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
+                <Select value={selectedEmployee || ''} onValueChange={setSelectedEmployee}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Employee" />
                   </SelectTrigger>
                   <SelectContent>
                     {employees.map((emp) => (
-                      <SelectItem key={emp["Email ID"]} value={emp["Email ID"]}>
+                      <SelectItem key={emp["Email ID"]} value={emp["Email ID"] || ''}>
                         {emp.Name} - {emp.Department}
                       </SelectItem>
                     ))}
