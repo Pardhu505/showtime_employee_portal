@@ -311,14 +311,14 @@ const PayslipManagement = () => {
             
             <div>
               <Label htmlFor="filterMonth">Month</Label>
-              <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <Select value={filterMonth || ''} onValueChange={setFilterMonth}>
                 <SelectTrigger>
                   <SelectValue placeholder="All Months" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="">All Months</SelectItem>
                   {months.map((month) => (
-                    <SelectItem key={month.value} value={month.value}>
+                    <SelectItem key={month.value} value={month.value || ''}>
                       {month.label}
                     </SelectItem>
                   ))}
@@ -328,14 +328,14 @@ const PayslipManagement = () => {
             
             <div>
               <Label htmlFor="filterYear">Year</Label>
-              <Select value={filterYear} onValueChange={setFilterYear}>
+              <Select value={filterYear || ''} onValueChange={setFilterYear}>
                 <SelectTrigger>
                   <SelectValue placeholder="All Years" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="">All Years</SelectItem>
                   {years.map((year) => (
-                    <SelectItem key={year} value={year.toString()}>
+                    <SelectItem key={year} value={year.toString() || ''}>
                       {year}
                     </SelectItem>
                   ))}
