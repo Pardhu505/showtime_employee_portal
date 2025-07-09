@@ -926,37 +926,6 @@ export const generateChannelsFromDepartments = () => {
 
 export const COMMUNICATION_CHANNELS = generateChannelsFromDepartments();
 
-// Mock messages
-export const MOCK_MESSAGES = [
-  {
-    id: 1,
-    channelId: 1,
-    senderId: "srinath@showtimeconsulting.in",
-    senderName: "P. Srinath Rao",
-    content: "Good morning everyone! Hope you all have a productive day ahead.",
-    timestamp: "2025-01-15T09:00:00Z",
-    type: "text"
-  },
-  {
-    id: 2,
-    channelId: 1,
-    senderId: "tejaswini@showtimeconsulting.in",
-    senderName: "Tejaswini CH",
-    content: "Reminder: Please submit your monthly reports by EOD today.",
-    timestamp: "2025-01-15T10:30:00Z",
-    type: "text"
-  },
-  {
-    id: 3,
-    channelId: 2,
-    senderId: "aparnajyothi@showtimeconsulting.in",
-    senderName: "Aparna Jyothi",
-    content: "The research project documentation is ready for review. Please check the shared folder.",
-    timestamp: "2025-01-15T09:15:00Z",
-    type: "text"
-  }
-];
-
 // Helper function to get all employees
 export const getAllEmployees = () => {
   const employees = [];
@@ -1009,23 +978,14 @@ export const generateBirthdayAnnouncements = (birthdayEmployees) => {
   }));
 };
 
-// User status management
+// User status constants - these are still useful for the frontend
 export const USER_STATUS = {
   ONLINE: 'online',
   OFFLINE: 'offline',
   BUSY: 'busy'
 };
 
-// Mock user status data
-export const getUserStatus = (email) => {
-  const savedStatus = localStorage.getItem(`userStatus_${email}`);
-  return savedStatus || USER_STATUS.ONLINE;
-};
-
-export const setUserStatus = (email, status) => {
-  localStorage.setItem(`userStatus_${email}`, status);
-};
-
+// This function can still be useful for displaying status text in components
 export const getStatusText = (status) => {
   switch (status) {
     case USER_STATUS.ONLINE:
@@ -1035,17 +995,13 @@ export const getStatusText = (status) => {
     case USER_STATUS.OFFLINE:
       return 'Offline';
     default:
-      return 'Unknown';
+      return 'Unknown'; // Or return status itself, or an empty string
   }
 };
 
-export const getAllUserStatuses = () => {
-  const employees = getAllEmployees();
-  return employees.map(emp => ({
-    ...emp,
-    status: getUserStatus(emp["Email ID"])
-  }));
-};
+// Functions like getUserStatus, setUserStatus, and getAllUserStatuses are removed
+// as status is now managed via WebSockets and AuthContext.
+
 // Add sample birthdays to some employees for demonstration
 const addSampleBirthdays = () => {
   const today = new Date();
