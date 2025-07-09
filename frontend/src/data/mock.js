@@ -805,6 +805,14 @@ export const DEPARTMENT_DATA = {
         "Reviewer": "Nikash Kumar",
         "Email ID": "yash@showtimeconsulting.in"
       }
+    ],
+    "System Admin": [
+      {
+        "Name": "System Administrator",
+        "Designation": "System Admin",
+        "Reviewer": "Management",
+        "Email ID": "admin@showtimeconsulting.in"
+      }
     ]
   }
 };
