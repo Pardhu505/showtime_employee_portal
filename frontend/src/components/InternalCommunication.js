@@ -475,14 +475,36 @@ const InternalCommunication = () => {
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <div className="flex items-center space-x-2 mb-1">
-                  <span className="font-medium text-sm text-gray-900">{message.senderName}</span>
-                  <span className="text-xs text-gray-500 flex items-center">
-                    <Clock className="h-3 w-3 mr-1" />
-                    {formatTime(message.timestamp)}
-                  </span>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-medium text-sm text-gray-900">{message.senderName}</span>
+                    <span className="text-xs text-gray-500 flex items-center">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {formatTime(message.timestamp)}
+                    </span>
+                  </div>
+                  {message.senderId === user.email && !message.deleted && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                          <MoreVertical className="h-3 w-3" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem 
+                          onClick={() => handleDeleteMessage(message.id)}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 className="h-3 w-3 mr-2" />
+                          Delete Message
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
                 </div>
-                <p className="text-sm text-gray-700">{message.content}</p>
+                <p className={`text-sm ${message.deleted ? 'text-gray-400 italic' : 'text-gray-700'}`}>
+                  {message.content}
+                </p>
               </div>
             </div>
           ))}
