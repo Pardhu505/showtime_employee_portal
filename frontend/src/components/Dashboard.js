@@ -9,7 +9,7 @@ import AdminPanel from './AdminPanel';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Calendar, Users, BarChart3, Bell, MessageSquare, Gift } from 'lucide-react';
+import { Calendar, Users, BarChart3, Bell, MessageSquare, Gift, Shield } from 'lucide-react';
 import { checkBirthdays, generateBirthdayAnnouncements } from '../data/mock';
 
 const Dashboard = () => {
