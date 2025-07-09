@@ -103,13 +103,21 @@ const Announcements = ({ initialAnnouncements = [] }) => {
           <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
             {filteredAnnouncements.length} {selectedPriority === 'all' ? 'Total' : selectedPriority}
           </Badge>
-          <Button 
-            onClick={() => setShowCreateForm(!showCreateForm)}
-            className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Create Announcement
-          </Button>
+          {isAdmin && (
+            <Button 
+              onClick={() => setShowCreateForm(!showCreateForm)}
+              className="bg-gradient-to-r from-[#225F8B] to-[#225F8B]/80 text-white"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Create Announcement
+            </Button>
+          )}
+          {!isAdmin && (
+            <Badge variant="outline" className="bg-yellow-50 text-yellow-800 border-yellow-200">
+              <Shield className="h-3 w-3 mr-1" />
+              Admin Only
+            </Badge>
+          )}
         </div>
       </div>
 
