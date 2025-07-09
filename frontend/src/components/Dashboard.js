@@ -5,6 +5,7 @@ import PortalCards from './PortalCards';
 import Announcements from './Announcements';
 import UserProfile from './UserProfile';
 import InternalCommunication from './InternalCommunication';
+import AdminPanel from './AdminPanel';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
