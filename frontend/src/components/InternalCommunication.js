@@ -539,16 +539,23 @@ const InternalCommunication = () => {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Internal Communication</h2>
         <Badge variant="outline" className="bg-[#225F8B]/10 text-[#225F8B] border-[#225F8B]/20">
-          Team Chat & Directory
+          {viewMode === 'directChat' ? 'Direct Message' : 'Team Chat & Directory'}
         </Badge>
       </div>
 
-      <Card className="h-[600px] overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl">
-        <div className="flex h-full">
-          {renderSidebar()}
-          {renderChatArea()}
-        </div>
-      </Card>
+      {viewMode === 'directChat' ? (
+        <DirectChat 
+          selectedEmployee={selectedEmployee}
+          onBack={handleBackToChannels}
+        />
+      ) : (
+        <Card className="h-[600px] overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl">
+          <div className="flex h-full">
+            {renderSidebar()}
+            {renderChatArea()}
+          </div>
+        </Card>
+      )}
 
       {/* Communication Features */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
