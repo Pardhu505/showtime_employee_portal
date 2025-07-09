@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { 
@@ -207,50 +206,50 @@ const PayslipManagement = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="employee">Employee</Label>
-                <Select value={selectedEmployee || ''} onValueChange={setSelectedEmployee}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Employee" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {employees.map((emp) => (
-                      <SelectItem key={emp["Email ID"]} value={emp["Email ID"] || ''}>
-                        {emp.Name} - {emp.Department}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <select 
+                  value={selectedEmployee} 
+                  onChange={(e) => setSelectedEmployee(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#225F8B] focus:border-[#225F8B]"
+                >
+                  <option value="">Select Employee</option>
+                  {employees.map((emp) => (
+                    <option key={emp["Email ID"]} value={emp["Email ID"]}>
+                      {emp.Name} - {emp.Department}
+                    </option>
+                  ))}
+                </select>
               </div>
               
               <div>
                 <Label htmlFor="month">Month</Label>
-                <Select value={selectedMonth || ''} onValueChange={setSelectedMonth}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {months.map((month) => (
-                      <SelectItem key={month.value} value={month.value || ''}>
-                        {month.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <select 
+                  value={selectedMonth} 
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#225F8B] focus:border-[#225F8B]"
+                >
+                  <option value="">Select Month</option>
+                  {months.map((month) => (
+                    <option key={month.value} value={month.value}>
+                      {month.label}
+                    </option>
+                  ))}
+                </select>
               </div>
               
               <div>
                 <Label htmlFor="year">Year</Label>
-                <Select value={selectedYear || ''} onValueChange={setSelectedYear}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {years.map((year) => (
-                      <SelectItem key={year} value={year.toString() || ''}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <select 
+                  value={selectedYear} 
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#225F8B] focus:border-[#225F8B]"
+                >
+                  <option value="">Select Year</option>
+                  {years.map((year) => (
+                    <option key={year} value={year.toString()}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             
@@ -311,36 +310,34 @@ const PayslipManagement = () => {
             
             <div>
               <Label htmlFor="filterMonth">Month</Label>
-              <Select value={filterMonth || ''} onValueChange={setFilterMonth}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All Months" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">All Months</SelectItem>
-                  {months.map((month) => (
-                    <SelectItem key={month.value} value={month.value || ''}>
-                      {month.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select 
+                value={filterMonth} 
+                onChange={(e) => setFilterMonth(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#225F8B] focus:border-[#225F8B]"
+              >
+                <option value="">All Months</option>
+                {months.map((month) => (
+                  <option key={month.value} value={month.value}>
+                    {month.label}
+                  </option>
+                ))}
+              </select>
             </div>
             
             <div>
               <Label htmlFor="filterYear">Year</Label>
-              <Select value={filterYear || ''} onValueChange={setFilterYear}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All Years" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">All Years</SelectItem>
-                  {years.map((year) => (
-                    <SelectItem key={year} value={year.toString() || ''}>
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select 
+                value={filterYear} 
+                onChange={(e) => setFilterYear(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#225F8B] focus:border-[#225F8B]"
+              >
+                <option value="">All Years</option>
+                {years.map((year) => (
+                  <option key={year} value={year.toString()}>
+                    {year}
+                  </option>
+                ))}
+              </select>
             </div>
             
             <div className="flex items-end">
