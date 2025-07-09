@@ -37,12 +37,29 @@ import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees, DEPARTMENT_DATA
 const InternalCommunication = () => {
   const { user } = useAuth();
   const [selectedChannel, setSelectedChannel] = useState(COMMUNICATION_CHANNELS[0]);
-  const [messages, setMessages] = useState(MOCK_MESSAGES);
+  const [messages, setMessages] = useState(() => {
+    const savedMessages = localStorage.getItem('chatMessages');
+    return savedMessages ? JSON.parse(savedMessages) : MOCK_MESSAGES;
+  });
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('channels'); // channels, people, directory
-  const [showChannelSettings, setShowChannelSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState('channels');
+  const [userStatus, setUserStatusState] = useState(USER_STATUS.ONLINE);
+  const [allUserStatuses, setAllUserStatuses] = useState(getAllUserStatuses());
   const messagesEndRef = useRef(null);
+
+  // Auto-save messages to localStorage
+  useEffect(() => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+  }, [messages]);
+
+  // Update user status
+  useEffect(() => {
+    if (user) {
+      setUserStatus(user.email, userStatus);
+      setAllUserStatuses(getAllUserStatuses());
+    }
+  }, [user, userStatus]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
