@@ -836,6 +836,15 @@ export const PORTAL_DATA = [
     icon: "🏢",
     gradient: "from-green-500 to-blue-600",
     category: "Management"
+  },
+  {
+    id: 3,
+    title: "Survey Management Portal",
+    description: "Manage surveys and analytics dashboard for insights",
+    url: "https://stc-survey-manageme-portal.vercel.app",
+    icon: "📋",
+    gradient: "from-purple-500 to-pink-600",
+    category: "Analytics"
   }
 ];
 
