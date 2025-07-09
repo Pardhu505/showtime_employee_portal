@@ -72,6 +72,12 @@ const InternalCommunication = () => {
     scrollToBottom();
   }, [messages]);
 
+  const handleDeleteMessages = () => {
+    const updatedMessages = messages.filter(msg => msg.channelId !== selectedChannel.id);
+    setMessages(updatedMessages);
+    console.log(`All messages in #${selectedChannel.name} have been deleted.`);
+  };
+
   const handleDeleteMessage = (messageId) => {
     setMessages(messages.map(msg => 
       msg.id === messageId 
