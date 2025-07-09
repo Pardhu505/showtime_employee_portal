@@ -33,6 +33,7 @@ import {
   Circle
 } from 'lucide-react';
 import { COMMUNICATION_CHANNELS, MOCK_MESSAGES, getAllEmployees, DEPARTMENT_DATA, USER_STATUS, getAllUserStatuses, setUserStatus } from '../data/mock';
+import DirectChat from './DirectChat';
 
 const InternalCommunication = () => {
   const { user } = useAuth();
@@ -46,6 +47,8 @@ const InternalCommunication = () => {
   const [activeTab, setActiveTab] = useState('channels');
   const [userStatus, setUserStatusState] = useState(USER_STATUS.ONLINE);
   const [allUserStatuses, setAllUserStatuses] = useState(getAllUserStatuses());
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [viewMode, setViewMode] = useState('channels'); // 'channels' or 'directChat'
   const messagesEndRef = useRef(null);
 
   // Auto-save messages to localStorage
