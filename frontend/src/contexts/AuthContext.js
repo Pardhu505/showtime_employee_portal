@@ -26,7 +26,25 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      // Mock authentication - check if user exists and password is correct
+      // Check for admin login
+      if (email === 'admin@showtimeconsulting.in' && password === 'Welcome@123') {
+        const userData = {
+          id: 'admin@showtimeconsulting.in',
+          name: 'System Administrator',
+          email: 'admin@showtimeconsulting.in',
+          designation: 'System Admin',
+          department: 'Admin',
+          subDepartment: 'System Admin',
+          reviewer: 'Management',
+          isAdmin: true,
+          loginTime: new Date().toISOString()
+        };
+        setUser(userData);
+        localStorage.setItem('showtimeUser', JSON.stringify(userData));
+        return userData;
+      }
+
+      // Regular user authentication
       const foundUser = findUserByEmail(email);
       if (!foundUser) {
         throw new Error('User not found');
@@ -44,6 +62,7 @@ export const AuthProvider = ({ children }) => {
         department: foundUser.Department,
         subDepartment: foundUser.SubDepartment,
         reviewer: foundUser.Reviewer,
+        isAdmin: false,
         loginTime: new Date().toISOString()
       };
 
