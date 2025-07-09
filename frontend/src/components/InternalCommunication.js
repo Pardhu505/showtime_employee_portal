@@ -318,25 +318,35 @@ const InternalCommunication = () => {
         {activeTab === 'people' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Online</h3>
-              <span className="text-xs text-gray-500">{getAllEmployees().length} members</span>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">All Employees</h3>
+              <span className="text-xs text-gray-500">{allUserStatuses.length} members</span>
             </div>
-            {getAllEmployees().slice(0, 20).map((emp, index) => (
-              <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
-                <div className="relative">
-                  <Avatar className="w-8 h-8">
-                    <AvatarFallback className="bg-[#225F8B] text-white text-xs">
-                      {emp.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute -bottom-0 -right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+            {allUserStatuses
+              .filter(emp => emp.Name.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map((emp, index) => (
+                <div key={index} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="relative">
+                    <Avatar className="w-8 h-8">
+                      <AvatarFallback className="bg-[#225F8B] text-white text-xs">
+                        {emp.Name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className={`absolute -bottom-0 -right-0 w-3 h-3 border-2 border-white rounded-full ${
+                      emp.status === USER_STATUS.ONLINE ? 'bg-green-500' :
+                      emp.status === USER_STATUS.BUSY ? 'bg-red-500' : 'bg-gray-400'
+                    }`}></div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-gray-900 truncate">{emp.Name}</div>
+                    <div className="text-xs text-gray-500 truncate flex items-center">
+                      <span>{emp.Designation} • {emp.Department}</span>
+                      <span className={`ml-2 text-xs ${getStatusColor(emp.status)}`}>
+                        {getStatusText(emp.status)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 truncate">{emp.Name}</div>
-                  <div className="text-xs text-gray-500 truncate">{emp.Designation} • {emp.Department}</div>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         )}
 
