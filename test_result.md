@@ -101,3 +101,104 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  The user wants to enhance the existing employee portal with the following specific requirements:
+  1. Only admin@showtimeconsulting.in should get the option to create announcements
+  2. When I click on the people in Internal Communication, it shows list of employees but when I click on employee name it is not working - make it work so that I can select employee and start texting (create direct chat functionality)
+  3. Create the option to delete one particular sent message
+  4. Create notification for any New message/New announcements (both browser and in-app notifications)
+  5. Create a document upload section for admin@showtimeconsulting.in, right next to employee profiles so that admin can upload payslips for employees. For all users, create the option to see payslips and download payslips based on month filter they select (PDF format)
+
+frontend:
+  - task: "Restrict announcement creation to admin users only"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/Announcements.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement admin-only access control for announcement creation"
+
+  - task: "Enable direct chat functionality from People section"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/InternalCommunication.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement clickable employee names for direct messaging"
+
+  - task: "Add individual message deletion functionality"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/InternalCommunication.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to add delete option for individual messages with 'This message was deleted' display"
+
+  - task: "Implement notification system for messages and announcements"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/NotificationSystem.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement both browser and in-app notifications"
+
+  - task: "Create payslip management system"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/PayslipManagement.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to implement admin upload functionality and user download with month filtering"
+
+backend:
+  - task: "Setup basic backend infrastructure"
+    implemented: false
+    working: "NA"
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Basic FastAPI server exists but needs enhancement for new features"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Restrict announcement creation to admin users only"
+    - "Enable direct chat functionality from People section"
+    - "Add individual message deletion functionality"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Starting implementation of user requirements. Phase 1 focuses on core functionality updates: admin-only announcements, direct chat, and message deletion. Phase 2 will cover notifications and payslip management."
