@@ -54,6 +54,15 @@ const Announcements = ({ initialAnnouncements = [] }) => {
     : announcements.filter(ann => ann.priority === selectedPriority);
 
   const handleCreateAnnouncement = () => {
+    if (!isAdmin) {
+      toast({
+        title: "Access Denied",
+        description: "Only administrators can create announcements.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!newAnnouncement.title.trim() || !newAnnouncement.content.trim()) {
       toast({
         title: "Error",
@@ -68,7 +77,7 @@ const Announcements = ({ initialAnnouncements = [] }) => {
       title: newAnnouncement.title,
       content: newAnnouncement.content,
       priority: newAnnouncement.priority,
-      author: newAnnouncement.author,
+      author: user?.name || 'Admin',
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -77,7 +86,7 @@ const Announcements = ({ initialAnnouncements = [] }) => {
       title: '',
       content: '',
       priority: 'medium',
-      author: 'Admin'
+      author: user?.name || 'Admin'
     });
     setShowCreateForm(false);
     
