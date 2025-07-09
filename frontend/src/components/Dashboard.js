@@ -48,6 +48,8 @@ const Dashboard = () => {
         return <UserProfile />;
       case 'communication':
         return <InternalCommunication />;
+      case 'admin':
+        return <AdminPanel />;
       default:
         return <PortalCards />;
     }
@@ -57,6 +59,7 @@ const Dashboard = () => {
     { id: 'portals', label: 'Portal Access', icon: BarChart3 },
     { id: 'announcements', label: 'Announcements', icon: Bell },
     { id: 'communication', label: 'Communication', icon: MessageSquare },
+    ...(user?.isAdmin ? [{ id: 'admin', label: 'Admin Panel', icon: Shield }] : []),
     { id: 'profile', label: 'Profile', icon: Users }
   ];
 
