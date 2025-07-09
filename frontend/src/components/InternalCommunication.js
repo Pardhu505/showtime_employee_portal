@@ -135,7 +135,8 @@ const InternalCommunication = () => {
         senderName: user.name,
         content: newMessage,
         timestamp: new Date().toISOString(),
-        type: 'text'
+        type: 'text',
+        deleted: false
       };
       setMessages([...messages, message]);
       setNewMessage('');
