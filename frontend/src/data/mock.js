@@ -1033,6 +1033,7 @@ export const getAllUserStatuses = () => {
     status: getUserStatus(emp["Email ID"])
   }));
 };
+// Add sample birthdays to some employees for demonstration
 const addSampleBirthdays = () => {
   const today = new Date();
   const employees = getAllEmployees();
