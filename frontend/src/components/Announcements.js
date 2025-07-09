@@ -122,7 +122,7 @@ const Announcements = ({ initialAnnouncements = [] }) => {
       </div>
 
       {/* Create Announcement Form */}
-      {showCreateForm && (
+      {showCreateForm && isAdmin && (
         <Card className="bg-gradient-to-r from-[#225F8B]/5 to-[#225F8B]/10 border-[#225F8B]/20">
           <CardHeader>
             <CardTitle className="text-lg font-semibold text-gray-900">
