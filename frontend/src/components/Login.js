@@ -44,6 +44,15 @@ const Login = () => {
           className="w-full h-full object-cover object-center"
         />
       </div>
+
+      {/* Animated Shape */}
+      <div className="shape2 rotate-me">
+        <img 
+          src="https://showtimeconsulting.in/web/images/thm-shape1.png" 
+          alt="About us" 
+          className="w-16 h-16 opacity-30"
+        />
+      </div>
       
       <Card className="w-full max-w-md relative backdrop-blur-sm bg-white/90 shadow-2xl border-0 z-10">
         <CardHeader className="text-center pb-8">
