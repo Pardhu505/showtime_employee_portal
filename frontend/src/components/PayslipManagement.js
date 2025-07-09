@@ -239,13 +239,13 @@ const PayslipManagement = () => {
               
               <div>
                 <Label htmlFor="year">Year</Label>
-                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <Select value={selectedYear || ''} onValueChange={setSelectedYear}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Year" />
                   </SelectTrigger>
                   <SelectContent>
                     {years.map((year) => (
-                      <SelectItem key={year} value={year.toString()}>
+                      <SelectItem key={year} value={year.toString() || ''}>
                         {year}
                       </SelectItem>
                     ))}
