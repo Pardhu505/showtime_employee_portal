@@ -845,6 +845,15 @@ export const PORTAL_DATA = [
     icon: "📋",
     gradient: "from-purple-500 to-pink-600",
     category: "Analytics"
+  },
+  {
+    id: 4,
+    title: "YouTube Trends & Sentiment Analysis",
+    description: "Platform for YouTube analytics and sentiment analysis.",
+    url: "https://youtube-trendsshowtimeconsultingin.vercel.app",
+    icon: "▶️",
+    gradient: "from-red-500 to-red-700",
+    category: "Analytics • Social Media"
   }
 ];
 
