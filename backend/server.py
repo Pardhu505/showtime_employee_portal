@@ -157,7 +157,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                     logging.info(f"Processing chat message from {user_id}: {message_data}")
                     msg_to_save = Message(
                         sender_id=user_id,
-                        sender_name=message_data..get("sender_name", "Unknown User"), # Client should send this
+                        sender_name=message_data.get("sender_name", "Unknown User"), # Client should send this
                         content=message_data.get("content", ""),
                         channel_id=message_data.get("channel_id"),
                         recipient_id=message_data.get("recipient_id")
