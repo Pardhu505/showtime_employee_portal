@@ -36,24 +36,27 @@ class ConnectionManager:
         await websocket.accept()
         self.active_connections[user_id] = websocket
         self.user_status[user_id] = "online"
+        logging.info(f"User {user_id} connected. Broadcasting 'online' status. Total connections: {len(self.active_connections)}")
         await self.broadcast_status(user_id, "online")
-        logging.info(f"User {user_id} connected. Total connections: {len(self.active_connections)}")
 
     def disconnect(self, user_id: str):
         if user_id in self.active_connections:
             del self.active_connections[user_id]
         self.user_status[user_id] = "offline"
         logging.info(f"User {user_id} disconnected. Total connections: {len(self.active_connections)}")
-        # No broadcast here, as it will be handled by broadcast_status called from disconnect flow
 
     async def send_personal_message(self, message: str, user_id: str):
         if user_id in self.active_connections:
+            logging.info(f"Sending personal message to {user_id}: {message}")
             await self.active_connections[user_id].send_text(message)
+        else:
+            logging.warning(f"Could not send personal message to {user_id}: user not connected.")
 
     async def broadcast(self, message: str, sender_id: str = None):
+        logging.info(f"Broadcasting message from {sender_id}: {message}")
         for user_id, connection in self.active_connections.items():
             if sender_id and user_id == sender_id:
-                continue # Don't send to self if sender_id is provided
+                continue
             await connection.send_text(message)
 
     async def broadcast_status(self, user_id: str, status: str):
@@ -151,28 +154,28 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
 
                 if message_data["type"] == "chat_message":
                     # Persist message to DB
+                    logging.info(f"Processing chat message from {user_id}: {message_data}")
                     msg_to_save = Message(
                         sender_id=user_id,
-                        sender_name=message_data.get("sender_name", "Unknown User"), # Client should send this
+                        sender_name=message_data..get("sender_name", "Unknown User"), # Client should send this
                         content=message_data.get("content", ""),
                         channel_id=message_data.get("channel_id"),
                         recipient_id=message_data.get("recipient_id")
                     )
-                    await db.messages.insert_one(msg_to_save.dict(exclude={"id"})) # Let MongoDB generate _id
+                    insert_result = await db.messages.insert_one(msg_to_save.dict(exclude={"id"}))
+                    logging.info(f"Message from {user_id} saved to DB with id: {insert_result.inserted_id}")
 
                     # Broadcast to recipient or channel
                     if msg_to_save.recipient_id: # Direct message
-                        # Send to recipient
+                        logging.info(f"Sending direct message to {msg_to_save.recipient_id}")
                         await manager.send_personal_message(json.dumps(msg_to_save.dict()), msg_to_save.recipient_id)
-                        # Send confirmation back to sender (optional, good for UI update)
+                        # Send confirmation back to sender
                         await manager.send_personal_message(json.dumps(msg_to_save.dict()), user_id)
                     elif msg_to_save.channel_id: # Channel message
-                        # For channel messages, broadcast to all in that channel.
-                        # This requires more sophisticated logic to know who is in which channel.
-                        # For now, broadcasting to everyone connected.
-                        # Sender will also receive it and client can handle display.
+                        logging.info(f"Broadcasting message to channel {msg_to_save.channel_id}")
                         await manager.broadcast(json.dumps(msg_to_save.dict()))
-                    else: # General broadcast (e.g. announcement) - also send to all including sender
+                    else: # General broadcast
+                        logging.info("Broadcasting general message")
                         await manager.broadcast(json.dumps(msg_to_save.dict()))
 
                 elif message_data["type"] == "set_status": # e.g. user manually sets to "busy"
@@ -229,6 +232,11 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_event():
+    try:
+        await client.admin.command('ping')
+        logger.info("MongoDB connection successful.")
+    except Exception as e:
+        logger.error(f"MongoDB connection failed: {e}")
     # Initialize anything needed on startup, e.g., load initial statuses from DB if persisted
     logger.info("Application startup: WebSocket ConnectionManager initialized.")
     # Example: load user statuses if you were persisting them
