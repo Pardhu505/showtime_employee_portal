@@ -32,9 +32,15 @@ export const AuthProvider = ({ children }) => {
     ws.onopen = () => {
       console.log('WebSocket connected for user:', userId);
       webSocketRef.current = ws;
-      // Backend now handles broadcasting "online" on connect
-      // Optionally, fetch all current statuses upon connection
-      // ws.send(JSON.stringify({ type: "get_all_statuses" })); // If you implement this on backend
+      // Optimistically set the user's own status to online
+      setUserStatuses(prevStatuses => {
+        const newStatuses = { ...prevStatuses, [userId]: 'online' };
+        console.log('Optimistically set user status:', newStatuses);
+        return newStatuses;
+      });
+      // Fetch all current statuses upon connection
+      console.log('Requesting all user statuses...');
+      ws.send(JSON.stringify({ type: "get_all_statuses" }));
     };
 
     ws.onmessage = (event) => {
@@ -42,10 +48,14 @@ export const AuthProvider = ({ children }) => {
         const message = JSON.parse(event.data);
         console.log('WebSocket message received:', message);
         if (message.type === 'status_update') {
-          setUserStatuses(prevStatuses => ({
-            ...prevStatuses,
-            [message.user_id]: message.status,
-          }));
+          setUserStatuses(prevStatuses => {
+            const newStatuses = { ...prevStatuses, [message.user_id]: message.status };
+            console.log('Updated user statuses after status_update:', newStatuses);
+            return newStatuses;
+          });
+        } else if (message.type === 'all_statuses') {
+          console.log('Received all user statuses:', message.statuses);
+          setUserStatuses(message.statuses);
         }
         // Handle other message types like chat messages if AuthContext is responsible
         // For now, assuming chat components will handle their own WebSocket for messages

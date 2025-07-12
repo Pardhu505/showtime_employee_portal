@@ -183,6 +183,17 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                     else:
                         logging.warning(f"Invalid status update from {user_id}: {new_status}")
 
+                elif message_data["type"] == "get_all_statuses":
+                    all_statuses = {uid: manager.user_status.get(uid, "offline") for uid in manager.user_status}
+                    for uid in manager.active_connections:
+                        if uid not in all_statuses or all_statuses[uid] != "busy":
+                            all_statuses[uid] = "online"
+
+                    await manager.send_personal_message(
+                        json.dumps({"type": "all_statuses", "statuses": all_statuses}),
+                        user_id
+                    )
+
 
             except json.JSONDecodeError:
                 logging.error(f"Failed to decode JSON from {user_id}: {data}")
