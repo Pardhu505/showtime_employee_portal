@@ -854,10 +854,19 @@ export const PORTAL_DATA = [
     icon: "▶️",
     gradient: "from-red-500 to-red-700",
     category: "Analytics • Social Media"
+  },
+  {
+    id: 5,
+    title: "News Dashboard & Sentiment Analysis",
+    description: "Real-time news dashboard and sentiment analysis platform.",
+    url: "https://newsanalysisshowtimeconsultingin.vercel.app",
+    icon: "📰",
+    gradient: "from-teal-500 to-cyan-600",
+    category: "News • Analytics"
   }
 ];
 
-// Mock announcements data
+
 export const ANNOUNCEMENTS_DATA = [
   {
     id: 1,
@@ -893,7 +902,7 @@ export const generateChannelsFromDepartments = () => {
       name: "general",
       type: "public",
       department: "All",
-      memberCount: 150,
+      memberCount: 129,
       description: "General company announcements and discussions",
       lastActivity: "2025-01-15T10:30:00Z"
     }
