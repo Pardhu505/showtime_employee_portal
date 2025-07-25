@@ -866,8 +866,8 @@ export const PORTAL_DATA = [
   },
   {
     id: 6,
-    title: "Twitter Analytics Portal",
-    description: "Real-time Twitter analytics and sentiment analysis.",
+    title: "Twitter Analytics Tool",
+    description: "Advanced Twitter analysis tool with visual reports",
     url: "https://stc-twitter-analytics-portal.vercel.app",
     icon: (
       <svg
