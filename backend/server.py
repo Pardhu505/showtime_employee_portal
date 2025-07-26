@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, APIRouter, WebSocket, WebSocketDisconnect, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -57,7 +57,10 @@ class ConnectionManager:
         for user_id, connection in self.active_connections.items():
             if sender_id and user_id == sender_id:
                 continue
-            await connection.send_text(message)
+            try:
+                await connection.send_text(message)
+            except Exception as e:
+                logging.error(f"Failed to send message to {user_id}: {e}")
 
     async def broadcast_status(self, user_id: str, status: str):
         self.user_status[user_id] = status
@@ -65,7 +68,10 @@ class ConnectionManager:
         logging.info(f"Broadcasting status update: {message}")
         for connection_user_id, connection in self.active_connections.items():
             # Send to all, including the user whose status changed, so client can react
-            await connection.send_text(message)
+            try:
+                await connection.send_text(message)
+            except Exception as e:
+                logging.error(f"Failed to broadcast status to {connection_user_id}: {e}")
 
 manager = ConnectionManager()
 
@@ -135,9 +141,30 @@ async def set_user_status_api(user_id: str, status_update: StatusCheckCreate):
     await manager.broadcast_status(user_id, new_status)
     return {"user_id": user_id, "status": new_status}
 
+# Add endpoint to get messages for a channel or direct conversation
+@api_router.get("/messages")
+async def get_messages(channel_id: str = None, recipient_id: str = None, sender_id: str = None, limit: int = 50):
+    """Get messages for a channel or direct conversation"""
+    query = {}
+    if channel_id:
+        query["channel_id"] = channel_id
+    elif recipient_id and sender_id:
+        # For direct messages, get messages between two users
+        query = {
+            "$or": [
+                {"sender_id": sender_id, "recipient_id": recipient_id},
+                {"sender_id": recipient_id, "recipient_id": sender_id}
+            ]
+        }
+    
+    messages = await db.messages.find(query, {"_id": 0}).sort("timestamp", -1).limit(limit).to_list(length=limit)
+    # Reverse to get chronological order
+    messages.reverse()
+    return messages
+
 
 # --- WebSocket Route ---
-@app.websocket("/ws/{user_id}")
+@api_router.websocket("/ws/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: str):
     await manager.connect(websocket, user_id)
     try:
@@ -162,21 +189,28 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                         channel_id=message_data.get("channel_id"),
                         recipient_id=message_data.get("recipient_id")
                     )
-                    insert_result = await db.messages.insert_one(msg_to_save.dict(exclude={"id"}))
+                    # Use model_dump() instead of dict() for Pydantic v2 compatibility
+                    message_dict = msg_to_save.model_dump(exclude={"id"})
+                    insert_result = await db.messages.insert_one(message_dict)
                     logging.info(f"Message from {user_id} saved to DB with id: {insert_result.inserted_id}")
 
                     # Broadcast to recipient or channel
+                    message_to_send = msg_to_save.model_dump()
+                    # Convert datetime to ISO string for JSON serialization
+                    if 'timestamp' in message_to_send and isinstance(message_to_send['timestamp'], datetime):
+                        message_to_send['timestamp'] = message_to_send['timestamp'].isoformat()
+                    
                     if msg_to_save.recipient_id: # Direct message
                         logging.info(f"Sending direct message to {msg_to_save.recipient_id}")
-                        await manager.send_personal_message(json.dumps(msg_to_save.dict()), msg_to_save.recipient_id)
+                        await manager.send_personal_message(json.dumps(message_to_send), msg_to_save.recipient_id)
                         # Send confirmation back to sender
-                        await manager.send_personal_message(json.dumps(msg_to_save.dict()), user_id)
+                        await manager.send_personal_message(json.dumps(message_to_send), user_id)
                     elif msg_to_save.channel_id: # Channel message
                         logging.info(f"Broadcasting message to channel {msg_to_save.channel_id}")
-                        await manager.broadcast(json.dumps(msg_to_save.dict()))
+                        await manager.broadcast(json.dumps(message_to_send))
                     else: # General broadcast
                         logging.info("Broadcasting general message")
-                        await manager.broadcast(json.dumps(msg_to_save.dict()))
+                        await manager.broadcast(json.dumps(message_to_send))
 
                 elif message_data["type"] == "set_status": # e.g. user manually sets to "busy"
                     new_status = message_data.get("status", "online").lower()
@@ -197,7 +231,6 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                         user_id
                     )
 
-
             except json.JSONDecodeError:
                 logging.error(f"Failed to decode JSON from {user_id}: {data}")
             except Exception as e:
@@ -205,6 +238,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
 
     except WebSocketDisconnect:
         logging.info(f"WebSocketDisconnect for user {user_id}")
+    except Exception as e:
+        logging.error(f"Unexpected error for user {user_id}: {e}")
     finally:
         # This block will execute on WebSocketDisconnect or any other exception causing the loop to exit
         manager.disconnect(user_id)
