@@ -99,6 +99,11 @@ class StatusCheckCreate(BaseModel):
 
 
 # --- API Routes ---
+@api_router.get("/health")
+async def health_check():
+    return {"status": "ok"}
+
+
 @api_router.get("/")
 async def root():
     return {"message": "Hello World from API"}
