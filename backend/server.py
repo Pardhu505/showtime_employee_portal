@@ -86,6 +86,14 @@ class Message(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     type: str = "text" # e.g., "text", "image", "file"
 
+class Employee(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    designation: str
+    department: str
+    date_of_birth: str | None = None
+
 # Define Models for existing status checks - might be deprecated or changed
 class StatusCheck(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -166,6 +174,42 @@ async def get_messages(channel_id: str = None, recipient_id: str = None, sender_
     # Reverse to get chronological order
     messages.reverse()
     return messages
+
+
+# --- Employee CRUD Endpoints ---
+@api_router.post("/employees", response_model=Employee)
+async def create_employee(employee: Employee):
+    employee_dict = employee.model_dump()
+    await db.employees.insert_one(employee_dict)
+    return employee
+
+@api_router.get("/employees", response_model=List[Employee])
+async def get_employees():
+    employees = await db.employees.find().to_list(1000)
+    return employees
+
+@api_router.get("/employees/{employee_id}", response_model=Employee)
+async def get_employee(employee_id: str):
+    employee = await db.employees.find_one({"id": employee_id})
+    if employee:
+        return employee
+    raise HTTPException(status_code=404, detail="Employee not found")
+
+@api_router.put("/employees/{employee_id}", response_model=Employee)
+async def update_employee(employee_id: str, employee: Employee):
+    employee_dict = employee.model_dump(exclude_unset=True)
+    await db.employees.update_one({"id": employee_id}, {"$set": employee_dict})
+    updated_employee = await db.employees.find_one({"id": employee_id})
+    if updated_employee:
+        return updated_employee
+    raise HTTPException(status_code=404, detail="Employee not found")
+
+@api_router.delete("/employees/{employee_id}")
+async def delete_employee(employee_id: str):
+    delete_result = await db.employees.delete_one({"id": employee_id})
+    if delete_result.deleted_count:
+        return {"message": "Employee deleted successfully"}
+    raise HTTPException(status_code=404, detail="Employee not found")
 
 
 # --- WebSocket Route ---
