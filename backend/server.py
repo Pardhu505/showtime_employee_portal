@@ -348,10 +348,15 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
 # Include the router in the main app
 app.include_router(api_router)
 
+origins = [
+    "https://showtime-employee-portal.vercel.app",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"], # Adjust for production
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
