@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, APIRouter, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,10 +6,13 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List, Dict
+from typing import List, Dict, Optional
 import uuid
 from datetime import datetime
 import json
+import pandas as pd
+import io
+from models import Attendance
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -210,6 +213,52 @@ async def delete_employee(employee_id: str):
     if delete_result.deleted_count:
         return {"message": "Employee deleted successfully"}
     raise HTTPException(status_code=404, detail="Employee not found")
+
+
+# --- Attendance Endpoints ---
+@api_router.post("/attendance/upload")
+async def upload_attendance(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+        df = pd.read_csv(io.BytesIO(contents))
+
+        # Basic validation: check for required columns
+        required_columns = ["Att. Date", "Emp Code", "Employee Name", "Status"]
+        if not all(col in df.columns for col in required_columns):
+            raise HTTPException(status_code=400, detail="CSV is missing required columns.")
+
+        # Convert to list of dicts and insert into MongoDB
+        attendance_records = df.to_dict(orient="records")
+        if not attendance_records:
+            return {"message": "CSV file is empty."}
+
+        await db.attendance.insert_many(attendance_records)
+        return {"message": f"Successfully uploaded and inserted {len(attendance_records)} attendance records."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to process CSV file: {e}")
+
+@api_router.get("/attendance", response_model=List[Attendance])
+async def get_attendance(
+    employee_email: Optional[str] = None,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None
+):
+    query = {}
+    if employee_email:
+        # Match any part of the email address
+        query["Emp Code"] = {"$regex": employee_email, "$options": "i"}
+
+    date_query = {}
+    if start_date:
+        date_query["$gte"] = start_date
+    if end_date:
+        date_query["$lte"] = end_date
+
+    if date_query:
+        query["Att. Date"] = date_query
+
+    attendance_data = await db.attendance.find(query, {"_id": 0}).to_list(length=None)
+    return attendance_data
 
 
 # --- WebSocket Route ---
